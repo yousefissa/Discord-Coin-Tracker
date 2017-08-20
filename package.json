@@ -1,0 +1,15 @@
+{
+  "name": "discord-coin-tracker",
+  "version": "1.0.0",
+  "description": "A coin tracker that is integrated with Discord.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yousef Issa",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "node.bittrex.api": "^0.4.3"
+  }
+}
