@@ -15,8 +15,7 @@ Simply run `npm install` to install the required dependencies. The comments make
 
 ### Deployment
 
-Use `npm install` to install required dependencies. Then run `node app.js`
-
+Use `npm install` to install required dependencies. Then run `node main.js` or `npm start`.
 
 ## Authors
 
