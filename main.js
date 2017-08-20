@@ -85,7 +85,7 @@ discordClient.on('message', message => {
                                 value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
                             }
                         ]
-                    };
+                    }
                 });
                 return;
             } else {
