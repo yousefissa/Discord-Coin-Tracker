@@ -1,0 +1,13 @@
+{
+    "discord":
+    {
+        "discordChannelID": "",
+        "discordToken": "",
+        "botPrefix": "q!",
+        "adminID": ""
+    },
+    "bittrex":  {
+    	"apikey": "",
+    	"apiscret": ""
+    }
+}
