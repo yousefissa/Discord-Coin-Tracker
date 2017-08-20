@@ -29,9 +29,8 @@ discordClient.on('message', message => {
     if (!message.content.startsWith(botPrefix)) return;
     // looks for new lines. they break our bot.
     if (message.content.indexOf("\n") !== -1) {
-        message.reply('Please keep your message on one line!');
-        return;
-    }
+        return message.reply('Please keep your message on one line!');
+    };
     // lets figure out the message content.
     const messageArray = message.content.split(' ');
     // make sure they have something other than the prefix
@@ -82,12 +81,13 @@ discordClient.on('message', message => {
                                 value: bitcoinPrice
                             },
                             {
-                                name: 'Bitrex Link',
+                                name: 'Bittrex Link',
                                 value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
                             }
                         ]
-                    }
+                    };
                 });
+                return;
             } else {
                 return message.reply('Ran into an error!');
             }
