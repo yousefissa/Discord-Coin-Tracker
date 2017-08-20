@@ -4,7 +4,9 @@ const discordClient = new discordAPI.Client();
 const authConfig = require('./config.json');
 const channelID = authConfig.discord.discordChannelID;
 const botPrefix = authConfig.discord.botPrefix;
-var cryptoChannel;
+
+let cryptoChannel;
+let bitcoinPrice;
 
 // get this info from your bitrex account settings page
 bittrexAPI.options({
@@ -19,7 +21,7 @@ discordClient.on('ready', () => {
 });
 
 discordClient.on('message', message => {
-	// check if the message is in the right channel
+    // check if the message is in the right channel
     if (message.channel.id != channelID) return;
     // don't listen to other bots
     if (message.author.bot) return;
@@ -38,50 +40,59 @@ discordClient.on('message', message => {
     };
     // lets check if they're asking for help!
     if (messageArray[1].toLowerCase() == 'help') {
-        message.reply('Simply put the coin that you want to find info about and it\'s market. For example, `q! btc-neo`, `q! eth-btc`, `q! usdt-xrp`.');
-        return;
+        return message.reply('Simply put the coin that you want to find info about and it\'s market. For example, `q! btc-neo`, `q! eth-btc`, `q! usdt-xrp`.');
     };
+    // get bitcoin price
+    bittrexAPI.getticker({
+        market: 'usdt-btc'
+    }, function(data, err) {
+        if (err) {
+            bitcoinPrice = 'Error :('
+        } else {
+            bitcoinPrice = '$' + String(data.result.Last)
+        }
+    });
     // lets get info on the coin!
     bittrexAPI.getticker({
-            market: messageArray[1]
-        }, function(data, err) {
-            if (err) {
-                message.reply('Ran into an error. Probably an unsupported coin.');
-            } else {
-                if (data.success) {
-                    cryptoChannel.send({
-                        embed: {
-                            color: 3447003,
-                            title: 'Crypto Coin Price',
-                            url: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`,
-                            fields: [{
+        market: messageArray[1]
+    }, function(data, err) {
+        if (err) {
+            message.reply('Ran into an error. Probably an unsupported coin.');
+        } else {
+            if (data.success) {
+                cryptoChannel.send({
+                    embed: {
+                        color: 3447003,
+                        title: 'Crypto Coin Price',
+                        url: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`,
+                        fields: [{
                                 name: 'Bittrex Prices',
                                 value: messageArray[1]
                             }, {
-                            	name: 'Bid',
-                            	value: String(data.result.Bid)
+                                name: 'Bid',
+                                value: String(data.result.Bid)
                             }, {
-                            	name: 'Ask',
-                            	value: String(data.result.Ask)
+                                name: 'Ask',
+                                value: String(data.result.Ask)
                             }, {
-                            	name: 'Last',
-                            	value: String(data.result.Last)
+                                name: 'Last',
+                                value: String(data.result.Last)
                             }, {
-                            	name: 'Current BTC Price', 
-                            	value: 'Coming soon!'
+                                name: 'Current BTC Price',
+                                value: bitcoinPrice
+                            },
+                            {
+                                name: 'Bitrex Link',
+                                value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
                             }
-                            ,{
-                            	name: 'Bitrex Link',
-                            	value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
-                            }
-                            ]
-                        }
-                    });
-                } else {
-                    return message.reply('Ran into an error!');
-                }
+                        ]
+                    }
+                });
+            } else {
+                return message.reply('Ran into an error!');
             }
-        });
+        }
+    });
 });
 
 discordClient.login(authConfig.discord.discordToken);
