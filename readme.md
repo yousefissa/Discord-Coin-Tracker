@@ -17,6 +17,7 @@ Simply run `npm install` to install the required dependencies. The comments make
 
 Use `npm install` to install required dependencies. Then run `node app.js`
 
+
 ## Authors
 
 * **Yousef Issa** - [yousefissa](https://github.com/yousefissa)
@@ -30,3 +31,6 @@ This project is licensed under the MIT License.
 * Feel free to make edits or to comment on my code so that I can improve!
 * Thanks for reading!
 
+### In action!
+
+![Prices!](https://user-images.githubusercontent.com/5174173/29491308-722c590e-851d-11e7-96dc-c649e95da7d1.png)
