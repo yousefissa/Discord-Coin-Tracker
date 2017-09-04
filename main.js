@@ -52,43 +52,42 @@ discordClient.on('message', message => {
     });
     // lets get info on the coin!
     bittrexAPI.getticker({
-            market: messageArray[1]
-        }, function(data, err) {
-            if (err) {
-                return message.reply('Ran into an error. Probably an unsupported coin.');
-            }
-            if (!data.success) {
-                return message.reply('Ran into an error!');
-            }
-            cryptoChannel.send({
-                embed: {
-                    color: 3447003,
-                    title: 'Crypto Coin Price',
-                    url: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`,
-                    fields: [{
-                            name: 'Bittrex Prices',
-                            value: messageArray[1]
-                        }, {
-                            name: 'Bid',
-                            value: String(data.result.Bid)
-                        }, {
-                            name: 'Ask',
-                            value: String(data.result.Ask)
-                        }, {
-                            name: 'Last',
-                            value: String(data.result.Last)
-                        }, {
-                            name: 'Current BTC Price',
-                            value: bitcoinPrice
-                        },
-                        {
-                            name: 'Bittrex Link',
-                            value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
-                        }
-                    ]
-                }
-            });
+        market: messageArray[1]
+    }, function(data, err) {
+        if (err) {
+            return message.reply('Ran into an error. Probably an unsupported coin.');
         }
+        if (!data.success) {
+            return message.reply('Ran into an error!');
+        }
+        cryptoChannel.send({
+            embed: {
+                color: 3447003,
+                title: 'Crypto Coin Price',
+                url: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`,
+                fields: [{
+                        name: 'Bittrex Prices',
+                        value: messageArray[1]
+                    }, {
+                        name: 'Bid',
+                        value: String(data.result.Bid)
+                    }, {
+                        name: 'Ask',
+                        value: String(data.result.Ask)
+                    }, {
+                        name: 'Last',
+                        value: String(data.result.Last)
+                    }, {
+                        name: 'Current BTC Price',
+                        value: bitcoinPrice
+                    },
+                    {
+                        name: 'Bittrex Link',
+                        value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
+                    }
+                ]
+            }
+        });
     });
 });
 
