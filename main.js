@@ -1,9 +1,9 @@
 const bittrexAPI = require('node.bittrex.api');
 const discordAPI = require('discord.js');
-const discordClient = new discordAPI.Client();
 const authConfig = require('./config.json');
 const channelID = authConfig.discord.discordChannelID;
 const botPrefix = authConfig.discord.botPrefix;
+const discordClient = new discordAPI.Client();
 
 let cryptoChannel;
 let bitcoinPrice;
@@ -37,7 +37,6 @@ discordClient.on('message', message => {
     if (messageArray.length < 2) {
         return message.reply('Invalid argument count!');
     };
-    // lets check if they're asking for help!
     if (messageArray[1].toLowerCase() == 'help') {
         return message.reply('Simply put the coin that you want to find info about and it\'s market. For example, `q! btc-neo`, `q! eth-btc`, `q! usdt-xrp`.');
     };
@@ -53,44 +52,42 @@ discordClient.on('message', message => {
     });
     // lets get info on the coin!
     bittrexAPI.getticker({
-        market: messageArray[1]
-    }, function(data, err) {
-        if (err) {
-            message.reply('Ran into an error. Probably an unsupported coin.');
-        } else {
-            if (data.success) {
-                cryptoChannel.send({
-                    embed: {
-                        color: 3447003,
-                        title: 'Crypto Coin Price',
-                        url: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`,
-                        fields: [{
-                                name: 'Bittrex Prices',
-                                value: messageArray[1]
-                            }, {
-                                name: 'Bid',
-                                value: String(data.result.Bid)
-                            }, {
-                                name: 'Ask',
-                                value: String(data.result.Ask)
-                            }, {
-                                name: 'Last',
-                                value: String(data.result.Last)
-                            }, {
-                                name: 'Current BTC Price',
-                                value: bitcoinPrice
-                            },
-                            {
-                                name: 'Bittrex Link',
-                                value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
-                            }
-                        ]
-                    }
-                });
-                return;
-            } else {
+            market: messageArray[1]
+        }, function(data, err) {
+            if (err) {
+                return message.reply('Ran into an error. Probably an unsupported coin.');
+            }
+            if (!data.success) {
                 return message.reply('Ran into an error!');
             }
+            cryptoChannel.send({
+                embed: {
+                    color: 3447003,
+                    title: 'Crypto Coin Price',
+                    url: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`,
+                    fields: [{
+                            name: 'Bittrex Prices',
+                            value: messageArray[1]
+                        }, {
+                            name: 'Bid',
+                            value: String(data.result.Bid)
+                        }, {
+                            name: 'Ask',
+                            value: String(data.result.Ask)
+                        }, {
+                            name: 'Last',
+                            value: String(data.result.Last)
+                        }, {
+                            name: 'Current BTC Price',
+                            value: bitcoinPrice
+                        },
+                        {
+                            name: 'Bittrex Link',
+                            value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
+                        }
+                    ]
+                }
+            });
         }
     });
 });
