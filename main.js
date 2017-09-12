@@ -69,7 +69,7 @@ let sendMessage = function(discordArray) {
             embed: {
                 color: 3447003,
                 title: 'Crypto Coin Price',
-                url: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`,
+                url: `https://bittrex.com/Market/Index?MarketName=${discordArray[1]}`,
                 fields: [{
                         name: 'Bittrex Prices',
                         value: discordArray[1]
