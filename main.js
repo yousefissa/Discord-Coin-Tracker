@@ -57,7 +57,7 @@ discordClient.on('message', message => {
 let sendMessage = function(discordArray) {
     // lets get info on the coin!
     bittrexAPI.getticker({
-        market: messageArray[1]
+        market: discordArray[1]
     }, function(data, err) {
         if (err) {
             return message.reply('Ran into an error. Probably an unsupported coin.');
@@ -72,7 +72,7 @@ let sendMessage = function(discordArray) {
                 url: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`,
                 fields: [{
                         name: 'Bittrex Prices',
-                        value: messageArray[1]
+                        value: discordArray[1]
                     }, {
                         name: 'Bid',
                         value: String(data.result.Bid)
