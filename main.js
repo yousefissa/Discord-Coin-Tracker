@@ -88,7 +88,7 @@ let sendMessage = function(discordArray) {
                     },
                     {
                         name: 'Bittrex Link',
-                        value: `https://bittrex.com/Market/Index?MarketName=${messageArray[1]}`
+                        value: `https://bittrex.com/Market/Index?MarketName=${discordArray[1]}`
                     }
                 ]
             }
