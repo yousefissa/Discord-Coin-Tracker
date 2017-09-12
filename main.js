@@ -49,7 +49,12 @@ discordClient.on('message', message => {
         } else {
             bitcoinPrice = '$' + String(data.result.Last)
         }
+        sendMessage(messageArray);
     });
+
+});
+
+let sendMessage = function(discordArray) {
     // lets get info on the coin!
     bittrexAPI.getticker({
         market: messageArray[1]
@@ -89,6 +94,6 @@ discordClient.on('message', message => {
             }
         });
     });
-});
+};
 
 discordClient.login(authConfig.discord.discordToken);
